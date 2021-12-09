@@ -15,6 +15,7 @@ public class Analyzer {
 
     public Map<String, Long> calculateDirectorySize(Path path) {
         try {
+            sizes = new HashMap<>();
             Files.walkFileTree(
                     path,
                     new SimpleFileVisitor<>() {

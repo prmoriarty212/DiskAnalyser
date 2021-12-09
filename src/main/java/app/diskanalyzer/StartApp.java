@@ -6,6 +6,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -15,11 +17,14 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static javafx.scene.input.MouseEvent.*;
+
 public class StartApp extends Application {
 
     private Stage stage;
     Map<String, Long> sizes;
     private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+    private PieChart pieChart;
 
     public static void main(String[] args) {
         launch(args);
@@ -46,11 +51,17 @@ public class StartApp extends Application {
     }
 
     private void buildChart(String path) {
-        PieChart pieChart = new PieChart(pieChartData);
+        pieChart = new PieChart(pieChartData);
 
         refillChart(path);
 
-        stage.setScene(new Scene(pieChart, 900, 600));
+        Button button = new Button(path);
+        button.setOnAction(event -> refillChart(path));
+        BorderPane pane = new BorderPane();
+        pane.setTop(button);
+        pane.setCenter(pieChart);
+
+        stage.setScene(new Scene(pane, 900, 600));
         stage.show();
     }
 
@@ -67,5 +78,13 @@ public class StartApp extends Application {
                         .map(entry -> new PieChart.Data(entry.getKey(), entry.getValue()))
                         .collect(Collectors.toList())
         );
+        pieChart.getData().forEach(data -> {
+            data
+                    .getNode()
+                    .addEventHandler(
+                            MOUSE_PRESSED,
+                            event -> refillChart(data.getName())
+                    );
+        });
     }
 }
