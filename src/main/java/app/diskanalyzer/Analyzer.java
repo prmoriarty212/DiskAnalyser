@@ -1,5 +1,8 @@
 package app.diskanalyzer;
 
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
+
+import javax.crypto.spec.PSource;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -48,4 +51,6 @@ public class Analyzer {
             updateDirectorySize(parent, size);
         }
     }
+
+    System.out.println(123132);
 }
