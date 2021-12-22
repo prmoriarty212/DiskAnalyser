@@ -53,4 +53,9 @@ public class Analyzer {
     }
 
     System.out.println(123132);
+        System.out.println(123132);
+            System.out.println(123132);
+                System.out.println(123132);
+                    System.out.println(123132);    System.out.println(123132);
+
 }
